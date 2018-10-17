@@ -15,24 +15,21 @@ namespace CSharpPoker
 
         public List<Card> Cards { get; }
 
-        public void Draw(Card card)
+        public void Draw(Card card) => Cards.Add(card);
+
+        public Card HighCard() => Cards.Aggregate((a, c) => ((int)c.Value > (int)a.Value) ? c : a);
+
+        public HandRank GetHandRank()
         {
-            Cards.Add(card);
+            if (HasRoyalFlush()) return HandRank.RoyalFlush;
+            if (HasFlush()) return HandRank.Flush;
+
+            return HandRank.HighCard;
+
         }
 
-        public Card HighCard()
-        {
-            return Cards.Aggregate( (a, c) =>
-            {
-                var card = (int)c.Value;
+        bool HasFlush() => Cards.All(c => Cards.First().Suit == c.Suit);
 
-                if (card > (int)a.Value)
-                {
-                    a = c;
-                }
-                return a;
-
-            });
-        }
+        bool HasRoyalFlush() => HasFlush() && Cards.All(c => (int)c.Value > 9);
     }
 }
