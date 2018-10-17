@@ -14,9 +14,10 @@ namespace CSharpPoker
             Suit = suit;
         }
 
-        public CardValue Value { get; set; }
-        public CardSuit Suit { get; set; }
+        public CardValue Value { get; }
+        public CardSuit Suit { get; }
 
+        public override string ToString() => $"{Value} of {Suit}";
 
     }
 }
