@@ -1,5 +1,7 @@
 ﻿using Xunit;
 using System.Linq;
+using FluentAssertions;
+
 
 namespace CSharpPoker.Tests
 {
@@ -10,7 +12,8 @@ namespace CSharpPoker.Tests
         {
             var hand = new Hand();
 
-            Assert.False(hand.Cards.Any());
+            //Assert.False(hand.Cards.Any());
+            hand.Cards.Any().Should().BeFalse();
 
         }
 
@@ -22,7 +25,8 @@ namespace CSharpPoker.Tests
 
             hand.Draw(card);
 
-            Assert.Equal(hand.Cards.First(), card);
+            //Assert.Equal(hand.Cards.First(), card);
+            card.Should().Be(hand.Cards.First());
 
         }
 
@@ -37,7 +41,8 @@ namespace CSharpPoker.Tests
             hand.Draw(new Card(CardValue.King, CardSuit.Hearts));
             hand.Draw(new Card(CardValue.Two, CardSuit.Hearts));
 
-            Assert.Equal(CardValue.King, hand.HighCard().Value);
+            //Assert.Equal(CardValue.King, hand.HighCard().Value);
+            hand.HighCard().Value.Should().Be(CardValue.King);
         }
 
         [Fact]
@@ -51,7 +56,9 @@ namespace CSharpPoker.Tests
             hand.Draw(new Card(CardValue.King, CardSuit.Hearts));
             hand.Draw(new Card(CardValue.Two, CardSuit.Hearts));
 
-            Assert.Equal(HandRank.HighCard, hand.GetHandRank());
+            //Assert.Equal(HandRank.HighCard, hand.GetHandRank());
+            hand.GetHandRank().Should().Be(HandRank.HighCard);
+
         }
 
         [Fact]
@@ -65,7 +72,8 @@ namespace CSharpPoker.Tests
             hand.Draw(new Card(CardValue.Five, CardSuit.Spades));
             hand.Draw(new Card(CardValue.Six, CardSuit.Spades));
 
-            Assert.Equal(HandRank.Flush, hand.GetHandRank());
+            //Assert.Equal(HandRank.Flush, hand.GetHandRank());
+            hand.GetHandRank().Should().Be(HandRank.Flush);
         }
 
         [Fact]
@@ -79,7 +87,8 @@ namespace CSharpPoker.Tests
             hand.Draw(new Card(CardValue.King, CardSuit.Spades));
             hand.Draw(new Card(CardValue.Ace, CardSuit.Spades));
 
-            Assert.Equal(HandRank.RoyalFlush, hand.GetHandRank());
+            //Assert.Equal(HandRank.RoyalFlush, hand.GetHandRank());
+            hand.GetHandRank().Should().Be(HandRank.RoyalFlush);
         }
 
     }
