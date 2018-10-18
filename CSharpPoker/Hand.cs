@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using static CSharpPoker.FiveCardPokerScorer;
 
 
 namespace CSharpPoker
@@ -21,35 +21,18 @@ namespace CSharpPoker
 
         public HandRank GetHandRank()
         {
-            if (HasRoyalFlush()) return HandRank.RoyalFlush;
-            if (HasFourOfAKind()) return HandRank.FourOfAKind;
-            if (HasFullHouse()) return HandRank.FullHouse;
-            if (HasFlush()) return HandRank.Flush;
-            if (HasStraight()) return HandRank.Straight;
-            if (HasThreeOfAKind()) return HandRank.ThreeOfAKind;
-            if (HasPair()) return HandRank.Pair;
+            if (HasRoyalFlush(Cards)) return HandRank.RoyalFlush;
+            if (HasStraightFlush(Cards)) return HandRank.StraightFlush;
+            if (HasFourOfAKind(Cards)) return HandRank.FourOfAKind;
+            if (HasFullHouse(Cards)) return HandRank.FullHouse;
+            if (HasFlush(Cards)) return HandRank.Flush;
+            if (HasStraight(Cards)) return HandRank.Straight;
+            if (HasThreeOfAKind(Cards)) return HandRank.ThreeOfAKind;
+            if (HasPair(Cards)) return HandRank.Pair;
 
             return HandRank.HighCard;
 
         }
-
-        bool HasFlush() => Cards.All(c => Cards.First().Suit == c.Suit);
-
-        bool HasRoyalFlush() => HasFlush() && Cards.All(c => (int)c.Value > 9);
-
-        bool HasPair() => Cards.GroupBy(n => n.Value).Any(c => c.Count() == 2);
-
-        bool HasThreeOfAKind() => Cards.GroupBy(n => n.Value).Any(c => c.Count() == 3);
-
-        bool HasFourOfAKind() => Cards.GroupBy(n => n.Value).Any(c => c.Count() == 4);
-        
-        bool HasFullHouse() => HasThreeOfAKind() && HasPair();
-
-        bool HasStraight() =>
-            Cards.OrderBy(card => card.Value).SelectConsecutive((n, next) => n.Value + 1 == next.Value).All(value => value);
-
-
-
 
     }
 }
