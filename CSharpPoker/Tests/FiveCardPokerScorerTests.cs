@@ -47,7 +47,7 @@ namespace CSharpPoker.Tests
             hand.Draw(new Card(CardValue.King, CardSuit.Hearts));
             hand.Draw(new Card(CardValue.Two, CardSuit.Hearts));
 
-            hand.HighCard().Value.Should().Be(CardValue.King);
+            FiveCardPokerScorer.HighCard(hand.Cards).Value.Should().Be(CardValue.King);
         }
 
         [Fact]
@@ -61,7 +61,8 @@ namespace CSharpPoker.Tests
             hand.Draw(new Card(CardValue.King, CardSuit.Hearts));
             hand.Draw(new Card(CardValue.Two, CardSuit.Hearts));
 
-            hand.GetHandRank().Should().Be(HandRank.HighCard);
+            FiveCardPokerScorer.GetHandRank(hand.Cards).Should().Be(HandRank.HighCard);
+
 
         }
 
@@ -76,7 +77,7 @@ namespace CSharpPoker.Tests
             hand.Draw(new Card(CardValue.Five, CardSuit.Spades));
             hand.Draw(new Card(CardValue.Six, CardSuit.Spades));
 
-            hand.GetHandRank().Should().Be(HandRank.Flush);
+            FiveCardPokerScorer.GetHandRank(hand.Cards).Should().Be(HandRank.Flush);
         }
 
         [Fact]
@@ -90,7 +91,7 @@ namespace CSharpPoker.Tests
             hand.Draw(new Card(CardValue.King, CardSuit.Spades));
             hand.Draw(new Card(CardValue.Ace, CardSuit.Spades));
 
-            hand.GetHandRank().Should().Be(HandRank.RoyalFlush);
+            FiveCardPokerScorer.GetHandRank(hand.Cards).Should().Be(HandRank.RoyalFlush);
         }
 
         [Fact]
@@ -104,7 +105,7 @@ namespace CSharpPoker.Tests
             hand.Draw(new Card(CardValue.Ten, CardSuit.Hearts));
             hand.Draw(new Card(CardValue.Ace, CardSuit.Spades));
 
-            hand.GetHandRank().Should().Be(HandRank.Pair);
+            FiveCardPokerScorer.GetHandRank(hand.Cards).Should().Be(HandRank.Pair);
         }
 
         [Fact]
@@ -118,7 +119,7 @@ namespace CSharpPoker.Tests
             hand.Draw(new Card(CardValue.Ten, CardSuit.Hearts));
             hand.Draw(new Card(CardValue.Ten, CardSuit.Spades));
 
-            hand.GetHandRank().Should().Be(HandRank.ThreeOfAKind);
+            FiveCardPokerScorer.GetHandRank(hand.Cards).Should().Be(HandRank.ThreeOfAKind);
         }
 
         [Fact]
@@ -132,7 +133,7 @@ namespace CSharpPoker.Tests
             hand.Draw(new Card(CardValue.Ten, CardSuit.Hearts));
             hand.Draw(new Card(CardValue.Ten, CardSuit.Spades));
 
-            hand.GetHandRank().Should().Be(HandRank.FourOfAKind);
+            FiveCardPokerScorer.GetHandRank(hand.Cards).Should().Be(HandRank.FourOfAKind);
         }
 
         [Fact]
@@ -146,7 +147,7 @@ namespace CSharpPoker.Tests
             hand.Draw(new Card(CardValue.Jack, CardSuit.Hearts));
             hand.Draw(new Card(CardValue.Ten, CardSuit.Spades));
 
-            hand.GetHandRank().Should().Be(HandRank.FullHouse);
+            FiveCardPokerScorer.GetHandRank(hand.Cards).Should().Be(HandRank.FullHouse);
         }
 
         [Fact]
@@ -160,7 +161,7 @@ namespace CSharpPoker.Tests
             hand.Draw(new Card(CardValue.King, CardSuit.Hearts));
             hand.Draw(new Card(CardValue.Ace, CardSuit.Spades));
 
-            hand.GetHandRank().Should().Be(HandRank.Straight);
+            FiveCardPokerScorer.GetHandRank(hand.Cards).Should().Be(HandRank.Straight);
         }
 
         [Fact]
@@ -174,7 +175,21 @@ namespace CSharpPoker.Tests
             hand.Draw(new Card(CardValue.Ten, CardSuit.Spades));
             hand.Draw(new Card(CardValue.King, CardSuit.Hearts));
 
-            hand.GetHandRank().Should().Be(HandRank.Straight);
+            FiveCardPokerScorer.GetHandRank(hand.Cards).Should().Be(HandRank.Straight);
+        }
+
+        [Fact]
+        public void CanScoreTwoPair()
+        {
+            var hand = new Hand();
+            hand.Draw(new Card(CardValue.Ace, CardSuit.Clubs));
+            hand.Draw(new Card(CardValue.Ten, CardSuit.Spades));
+            hand.Draw(new Card(CardValue.Nine, CardSuit.Spades));
+            hand.Draw(new Card(CardValue.Ten, CardSuit.Hearts));
+            hand.Draw(new Card(CardValue.Ace, CardSuit.Spades));
+
+            FiveCardPokerScorer.GetHandRank(hand.Cards).Should().Be(HandRank.TwoPair);
+
         }
     }
 }
