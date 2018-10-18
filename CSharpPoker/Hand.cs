@@ -25,6 +25,7 @@ namespace CSharpPoker
             if (HasFourOfAKind()) return HandRank.FourOfAKind;
             if (HasFullHouse()) return HandRank.FullHouse;
             if (HasFlush()) return HandRank.Flush;
+            if (HasStraight()) return HandRank.Straight;
             if (HasThreeOfAKind()) return HandRank.ThreeOfAKind;
             if (HasPair()) return HandRank.Pair;
 
@@ -41,8 +42,12 @@ namespace CSharpPoker
         bool HasThreeOfAKind() => Cards.GroupBy(n => n.Value).Any(c => c.Count() == 3);
 
         bool HasFourOfAKind() => Cards.GroupBy(n => n.Value).Any(c => c.Count() == 4);
+        
+        bool HasFullHouse() => HasThreeOfAKind() && HasPair();
 
-        bool HasFullHouse() => Cards.GroupBy(n => n.Value).All(c => c.Count() == 3 || c.Count() == 2);
+        bool HasStraight() =>
+            Cards.OrderBy(card => card.Value).SelectConsecutive((n, next) => n.Value + 1 == next.Value).All(value => value);
+
 
 
 

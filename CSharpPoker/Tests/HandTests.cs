@@ -1,12 +1,22 @@
 ﻿using Xunit;
 using System.Linq;
 using FluentAssertions;
+using Xunit.Abstractions;
+
 
 
 namespace CSharpPoker.Tests
 {
     public class HandTests
     {
+
+        private readonly ITestOutputHelper output;
+
+        public HandTests(ITestOutputHelper output)
+        {
+            this.output = output;
+        }
+
         [Fact]
         public void CanCreateHand()
         {
@@ -145,6 +155,20 @@ namespace CSharpPoker.Tests
             hand.Draw(new Card(CardValue.Ten, CardSuit.Spades));
 
             hand.GetHandRank().Should().Be(HandRank.FullHouse);
+        }
+
+        [Fact]
+        public void CanScoreStraight()
+        {
+            var hand = new Hand();
+
+            hand.Draw(new Card(CardValue.Ten, CardSuit.Clubs));
+            hand.Draw(new Card(CardValue.Jack, CardSuit.Spades));
+            hand.Draw(new Card(CardValue.Queen, CardSuit.Spades));
+            hand.Draw(new Card(CardValue.King, CardSuit.Hearts));
+            hand.Draw(new Card(CardValue.Ace, CardSuit.Spades));
+
+            hand.GetHandRank().Should().Be(HandRank.Straight);
         }
 
     }
