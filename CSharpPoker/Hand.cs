@@ -22,7 +22,11 @@ namespace CSharpPoker
         public HandRank GetHandRank()
         {
             if (HasRoyalFlush()) return HandRank.RoyalFlush;
+            if (HasFourOfAKind()) return HandRank.FourOfAKind;
+            if (HasFullHouse()) return HandRank.FullHouse;
             if (HasFlush()) return HandRank.Flush;
+            if (HasThreeOfAKind()) return HandRank.ThreeOfAKind;
+            if (HasPair()) return HandRank.Pair;
 
             return HandRank.HighCard;
 
@@ -31,5 +35,16 @@ namespace CSharpPoker
         bool HasFlush() => Cards.All(c => Cards.First().Suit == c.Suit);
 
         bool HasRoyalFlush() => HasFlush() && Cards.All(c => (int)c.Value > 9);
+
+        bool HasPair() => Cards.GroupBy(n => n.Value).Any(c => c.Count() == 2);
+
+        bool HasThreeOfAKind() => Cards.GroupBy(n => n.Value).Any(c => c.Count() == 3);
+
+        bool HasFourOfAKind() => Cards.GroupBy(n => n.Value).Any(c => c.Count() == 4);
+
+        bool HasFullHouse() => Cards.GroupBy(n => n.Value).All(c => c.Count() == 3 || c.Count() == 2);
+
+
+
     }
 }
