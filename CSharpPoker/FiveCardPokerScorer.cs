@@ -6,26 +6,26 @@ namespace CSharpPoker
 {
     public static class FiveCardPokerScorer
     {
-         public static Card HighCard(IEnumerable<Card> cards) => cards.Aggregate((a, c) => ((int)c.Value > (int)a.Value) ? c : a);
+        public static Card HighCard(IEnumerable<Card> cards) => cards.Aggregate((a, c) => ((int)c.Value > (int)a.Value) ? c : a);
 
-         static bool HasFlush(IEnumerable<Card> cards) => cards.All(c => cards.First().Suit == c.Suit);
+        static bool HasFlush(IEnumerable<Card> cards) => cards.All(c => cards.First().Suit == c.Suit);
 
-         static bool HasRoyalFlush(IEnumerable<Card> cards) => HasFlush(cards) && cards.All(c => (int)c.Value > 9);
+        static bool HasRoyalFlush(IEnumerable<Card> cards) => HasFlush(cards) && cards.All(c => (int)c.Value > 9);
 
-         static bool HasPair(IEnumerable<Card> cards) => cards.GroupBy(n => n.Value).Any(c => c.Count() == 2);
+        static bool HasPair(IEnumerable<Card> cards) => cards.GroupBy(n => n.Value).Any(c => c.Count() == 2);
 
         static bool HasTwoPair(IEnumerable<Card> cards) => cards.GroupBy(n => n.Value).Count(c => c.Count() == 2) == 2;
 
         static bool HasThreeOfAKind(IEnumerable<Card> cards) => cards.GroupBy(n => n.Value).Any(c => c.Count() == 3);
 
-         static bool HasFourOfAKind(IEnumerable<Card> cards) => cards.GroupBy(n => n.Value).Any(c => c.Count() == 4);
+        static bool HasFourOfAKind(IEnumerable<Card> cards) => cards.GroupBy(n => n.Value).Any(c => c.Count() == 4);
 
-         static bool HasFullHouse(IEnumerable<Card> cards) => HasThreeOfAKind(cards) && HasPair(cards);
+        static bool HasFullHouse(IEnumerable<Card> cards) => HasThreeOfAKind(cards) && HasPair(cards);
 
-         static bool HasStraight(IEnumerable<Card> cards) =>
-            cards.OrderBy(card => card.Value).SelectConsecutive((n, next) => n.Value + 1 == next.Value).All(value => value);
+        static bool HasStraight(IEnumerable<Card> cards) =>
+           cards.OrderBy(card => card.Value).SelectConsecutive((n, next) => n.Value + 1 == next.Value).All(value => value);
 
-         static bool HasStraightFlush(IEnumerable<Card> cards) => HasStraight(cards) && HasFlush(cards);
+        static bool HasStraightFlush(IEnumerable<Card> cards) => HasStraight(cards) && HasFlush(cards);
 
 
         // A list of ranks gives added flexibility to how hand ranks can be scored.
@@ -51,5 +51,5 @@ namespace CSharpPoker
 
     }
 
- 
+
 }
