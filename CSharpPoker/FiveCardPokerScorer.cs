@@ -34,8 +34,7 @@ namespace CSharpPoker
                            .OrderByDescending(card => card.Rank)
                            .First(rule => rule.Eval(cards)).Rank;
 
-        static List<Ranker> Rankings() =>
-          new List<Ranker>
+        static List<Ranker> Rankings() => new List<Ranker>
           {
                        new Ranker(cards => HasRoyalFlush(cards), HandRank.RoyalFlush),
                        new Ranker(cards => HasStraightFlush(cards), HandRank.StraightFlush),
@@ -48,7 +47,6 @@ namespace CSharpPoker
                        new Ranker(cards => HasPair(cards), HandRank.Pair),
                        new Ranker(cards => true, HandRank.HighCard),
           };
-
     }
 
 

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using static CSharpPoker.FiveCardPokerScorer;
+﻿using System.Collections.Generic;
 
 
 namespace CSharpPoker
